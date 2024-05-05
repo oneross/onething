@@ -1,0 +1,37 @@
+
+navigate_write:
+  intent: 'navigate_write'
+  intent_type: 'page_navigation'
+  intent_display: 'Write'
+  intent_description: 'Navigate to the Write page.'
+  intent_shortcut: 'Ctrl+Shift+E'
+  intent_extra_info: 
+    page_to_load: 'app.py'
+    intent_icon: 'pencil-square'
+navigate_collect:
+  intent: 'navigate_collect'
+  intent_type: 'page_navigation'
+  intent_display: 'Collect'
+  intent_description: 'Navigate to the Collect page.'
+  intent_shortcut: 'Ctrl+Shift+='
+  intent_extra_info: 
+    page_to_load: 'pages/1_Collect.py'
+    intent_icon: 'card-list'
+navigate_tasks:
+  intent: 'navigate_tasks'
+  intent_type: 'page_navigation'
+  intent_display: 'Tasks'
+  intent_description: 'Navigate to the Tasks page.'
+  intent_shortcut: 'Ctrl+Shift+T'
+  intent_extra_info: 
+    page_to_load: 'pages/2_Tasks.py'
+    intent_icon: 'list-task'
+navigate_preview:
+  intent: 'navigate_preview'
+  intent_type: 'page_navigation'
+  intent_display: 'Preview'
+  intent_description: 'Navigate to the Preview page.'
+  intent_shortcut: 'Ctrl+Shift+P'
+  intent_extra_info: 
+    page_to_load: 'pages/3_Preview.py'
+    intent_icon: 'eye-fill'

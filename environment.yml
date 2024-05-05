@@ -1,5 +1,0 @@
-name: onething
-dependencies:
-- python=3
-- numpy
-- ipython
