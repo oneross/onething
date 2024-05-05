@@ -9,7 +9,7 @@ from ui.navigation_menu import navigation_intent
 from ui.sidebar import render_sidebar
 from ui.styles import no_deploy_button
 import utils.intents as intents
-from agents.local_agent import LocalEditorAgent
+from agents.openai_agent import OpenaiEditorAgent
 
 import yaml
 
@@ -34,7 +34,7 @@ editor_height = cache.get('editor_height', 500)
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-editor_agent = LocalEditorAgent()
+editor_agent = OpenaiEditorAgent()
 
 ####################
 ## USER INTERFACE ##
