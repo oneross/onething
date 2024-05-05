@@ -67,32 +67,32 @@ with fixed:
     clipboard_content = pyperclip.paste()
     current_content = cache.get('current_content', '')
 
-    if clipboard_content and clipboard_content != current_content:
-        ## TODO: Actually make recognize image.
-        if clipboard_content.startswith(('http', 'https')) and clipboard_content.endswith(('.png', '.jpg', '.jpeg')):
-            st.info('Image in clipboard')
-            image_response = requests.get(clipboard_content)
-            image = Image.open(io.BytesIO(image_response.content))
-            st.image(image, caption='Clipboard Image')
-            if st.button('Extract text from image'):
-                extracted_text = pytesseract.image_to_string(image)
-                pyperclip.copy(extracted_text)
-                st.success('Text extracted and copied to clipboard')
-        else:
-            # Save current content to collection if it's not empty
-            if current_content:
-                current_datetime = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-                new_entry = {
-                    'datetime': [current_datetime],
-                    'content': [current_content]
-                }
-                new_entry_df = pd.DataFrame(new_entry)
-                collection_df = cache.get('Collection', pd.DataFrame())
-                cache['Collection'] = pd.concat([new_entry_df, collection_df], ignore_index=True)
+    # if clipboard_content and clipboard_content != current_content:
+    #     ## TODO: Actually make recognize image.
+    #     if clipboard_content.startswith(('http', 'https')) and clipboard_content.endswith(('.png', '.jpg', '.jpeg')):
+    #         st.info('Image in clipboard')
+    #         image_response = requests.get(clipboard_content)
+    #         image = Image.open(io.BytesIO(image_response.content))
+    #         st.image(image, caption='Clipboard Image')
+    #         if st.button('Extract text from image'):
+    #             extracted_text = pytesseract.image_to_string(image)
+    #             pyperclip.copy(extracted_text)
+    #             st.success('Text extracted and copied to clipboard')
+    #     else:
+    #         # Save current content to collection if it's not empty
+    #         if current_content:
+    #             current_datetime = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+    #             new_entry = {
+    #                 'datetime': [current_datetime],
+    #                 'content': [current_content]
+    #             }
+    #             new_entry_df = pd.DataFrame(new_entry)
+    #             collection_df = cache.get('Collection', pd.DataFrame())
+    #             cache['Collection'] = pd.concat([new_entry_df, collection_df], ignore_index=True)
             
-            # Load new text content from clipboard into current content
-            cache['current_content'] = clipboard_content
-            st.rerun()
+    #         # Load new text content from clipboard into current content
+    #         cache['current_content'] = clipboard_content
+    #         st.rerun()
 
     current_content = st.text_area("Content", value=cache.get('current_content', ''))
     if current_content != cache.get('current_content', ''):
