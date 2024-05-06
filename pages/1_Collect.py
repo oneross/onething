@@ -108,12 +108,33 @@ with fixed:
             st.markdown(f't{approx_token_count} w{word_count}c{character_count}')
 
     with content_editor_ui_right:
-        selected_option = option_menu(None, ['Edit', 'Save', 'Load', 'Clear', 'All', 'Swap', 'Trash'], 
-            icons=['pencil', 'save', 'upload', 'app', 'check-square', 'arrow-down-up', 'trash'], 
-            menu_icon='cast', default_index=0, orientation='horizontal')
+        selected_option = option_menu(None, ['Edit', 'Save', 'Load', 'Clear', 'All', 'Swap', 'More'], 
+            icons=['pencil', 'save', 'upload', 'app', 'check-square', 'arrow-down-up', 'caret-down-fill'], 
+            menu_icon='cast', default_index=0, orientation='horizontal',
+            styles={"container": {"padding": "0!important", "margin": "0!important", "background-color": "#fafafa"}
+                    }
+                    )
         
-        intents.clear_intents_matching('collection_editor_')
-        intents.trigger_intent('collection_editor_' + selected_option.lower())
+        if selected_option == 'More':
+            collection_editor_more_left, collection_editor_more_right = st.columns([1,4])
+            with collection_editor_more_left:
+                auto_collect_from_clipboard = st.checkbox("Auto-clip", value=cache.get('auto_collect_from_clipboard', False))
+                if auto_collect_from_clipboard != cache.get('auto_collect_from_clipboard', False):
+                    cache.set('auto_collect_from_clipboard', auto_collect_from_clipboard)
+            with collection_editor_more_right:
+                more_option = option_menu(None, ['Trash', 'Two', 'Three', 'Four', 'Pad'],
+                    icons=['trash', 'cast', 'cast', 'cast', 'box-arrow-right'],
+                    menu_icon='cast', default_index=1, orientation='horizontal',
+                    styles={"container": {"padding": "0!important", "margin": "0!important", "background-color": "#fafafa"}
+                           }
+                           )
+                intents.clear_intents_matching('collection_editor_')
+                intents.trigger_intent('collection_editor_' + more_option.lower())
+
+                
+        else:
+            intents.clear_intents_matching('collection_editor_')
+            intents.trigger_intent('collection_editor_' + selected_option.lower())
 
         if st.session_state['logging_enabled']: 
             st.markdown('### Intents')

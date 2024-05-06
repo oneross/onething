@@ -22,7 +22,10 @@ def navigation_intent(current_page):
     default_index = current_page
     selected_option = option_menu(None, menu_options, 
                                   icons=icons, 
-                                  menu_icon='cast', default_index=default_index, orientation='horizontal')
+                                  menu_icon='cast', default_index=default_index, orientation='horizontal',
+                                  styles={"container": {"padding": "0!important", "margin": "0!important",}
+                                        }
+                                        )
     
     # Parse through intents to find which key has intent_display that matches selected_option
     for intent, details in intents.items():
