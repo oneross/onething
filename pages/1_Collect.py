@@ -45,6 +45,22 @@ if 'Collection' not in cache:
 
 # def render_collection_row(row):
 
+auto_collect_from_clipboard = cache.get('auto_collect_from_clipboard', False)
+if auto_collect_from_clipboard:
+    clipboard_content = pyperclip.paste()
+    current_content = cache.get('current_content', '')
+    if clipboard_content != current_content:
+        if current_content:  # Only push to Collection if there is something to push
+            current_datetime = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+            new_entry = {
+                'datetime': [current_datetime],
+                'content': [current_content]
+            }
+            new_entry_df = pd.DataFrame(new_entry)
+            collection_df = cache.get('Collection', pd.DataFrame())
+            cache['Collection'] = pd.concat([new_entry_df, collection_df], ignore_index=True)
+        cache['current_content'] = clipboard_content
+
 
 ####################
 ## USER INTERFACE ##
@@ -204,6 +220,7 @@ stripped_new_collection_df = new_collection_df.sort_values(by='order', ascending
 if not stripped_new_collection_df.equals(collection_df):
     cache['Collection'] = stripped_new_collection_df
     st.toast('Changes saved successfully!')
+
 
 #####################
 ## INTENT HANDLING ## Common to all pages
